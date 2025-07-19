@@ -50,26 +50,26 @@ const arraySongs = [
 
 /******************** MEDIA SESSION CONFIG ********************/
 const playlist = [
-  { title: nameSongs[0], artist: nameBand, url: arraySongs[0] },
-  { title: nameSongs[1], artist: nameBand, url: arraySongs[1] },
-  { title: nameSongs[2], artist: nameBand, url: arraySongs[2] },
-  { title: nameSongs[3], artist: nameBand, url: arraySongs[3] },
-  { title: nameSongs[4], artist: nameBand, url: arraySongs[4] },
-  { title: nameSongs[5], artist: nameBand, url: arraySongs[5] },
-  { title: nameSongs[6], artist: nameBand, url: arraySongs[6] },
-  { title: nameSongs[7], artist: nameBand, url: arraySongs[7] },
-  { title: nameSongs[8], artist: nameBand, url: arraySongs[8] },
-  { title: nameSongs[9], artist: nameBand, url: arraySongs[9] },
-  { title: nameSongs[10], artist: nameBand, url: arraySongs[10] },
-  { title: nameSongs[11], artist: nameBand, url: arraySongs[11] },
-  { title: nameSongs[12], artist: nameBand, url: arraySongs[12] },
-  { title: nameSongs[13], artist: nameBand, url: arraySongs[13] },
-  { title: nameSongs[14], artist: nameBand, url: arraySongs[14] },
-  { title: nameSongs[15], artist: nameBand, url: arraySongs[15] },
-  { title: nameSongs[16], artist: nameBand, url: arraySongs[16] },
-  { title: nameSongs[17], artist: nameBand, url: arraySongs[17] },
-  { title: nameSongs[18], artist: nameBand, url: arraySongs[18] },
-  { title: nameSongs[19], artist: nameBand, url: arraySongs[19] }
+  { title: nameSongs[0]?.trim(), artist: nameBand, url: arraySongs[0] },
+  { title: nameSongs[1]?.trim(), artist: nameBand, url: arraySongs[1] },
+  { title: nameSongs[2]?.trim(), artist: nameBand, url: arraySongs[2] },
+  { title: nameSongs[3]?.trim(), artist: nameBand, url: arraySongs[3] },
+  { title: nameSongs[4]?.trim(), artist: nameBand, url: arraySongs[4] },
+  { title: nameSongs[5]?.trim(), artist: nameBand, url: arraySongs[5] },
+  { title: nameSongs[6]?.trim(), artist: nameBand, url: arraySongs[6] },
+  { title: nameSongs[7]?.trim(), artist: nameBand, url: arraySongs[7] },
+  { title: nameSongs[8]?.trim(), artist: nameBand, url: arraySongs[8] },
+  { title: nameSongs[9]?.trim(), artist: nameBand, url: arraySongs[9] },
+  { title: nameSongs[10]?.trim(), artist: nameBand, url: arraySongs[10] },
+  { title: nameSongs[11]?.trim(), artist: nameBand, url: arraySongs[11] },
+  { title: nameSongs[12]?.trim(), artist: nameBand, url: arraySongs[12] },
+  { title: nameSongs[13]?.trim(), artist: nameBand, url: arraySongs[13] },
+  { title: nameSongs[14]?.trim(), artist: nameBand, url: arraySongs[14] },
+  { title: nameSongs[15]?.trim(), artist: nameBand, url: arraySongs[15] },
+  { title: nameSongs[16]?.trim(), artist: nameBand, url: arraySongs[16] },
+  { title: nameSongs[17]?.trim(), artist: nameBand, url: arraySongs[17] },
+  { title: nameSongs[18]?.trim(), artist: nameBand, url: arraySongs[18] },
+  { title: nameSongs[19]?.trim(), artist: nameBand, url: arraySongs[19] }
 ];
 
 function toCapitalize(text = '') {
@@ -81,9 +81,7 @@ function toCapitalize(text = '') {
         return `${el[0].toUpperCase()}${el.slice(1).toLowerCase()}`;
       let secondLetter =
         el[0] === '(' ? el[1].toUpperCase() : el[1].toLowerCase();
-      return `${el[0].toUpperCase()}${secondLetter}${el
-        .slice(2)
-        .toLowerCase()}`;
+      return `${el[0].toUpperCase()}${secondLetter}${el.slice(2).toLowerCase()}`;
     })
     .join(' ')
     .replace(/\s+/g, ' ');
@@ -97,9 +95,7 @@ function updateMetadata(currentIndex = 0) {
       )
       .getPropertyValue('background-image') ?? '1';
   let indexPosition = currentUrl.search(/\/n\d/);
-  let imageNumber = currentUrl
-    .slice(indexPosition + 2, indexPosition + 3)
-    .trim();
+  let imageNumber = currentUrl.slice(indexPosition + 2, indexPosition + 3).trim();
 
   navigator.mediaSession.metadata = new MediaMetadata({
     title: `${toCapitalize(playlist[currentIndex].title)}`,
@@ -154,7 +150,7 @@ function previousTrack(currentIndex) {
     $audio.loop = false;
     actualButtonPlayActive(currentIndex);
     nextTrack(currentIndex);
-    showTitle(currentIndex)
+    showTitle(currentIndex);
   });
 }
 
@@ -239,8 +235,8 @@ const blockPlayPauseStopBUTTON = () => {
 };
 
 const removeClassBlockedButtonNextSiblings = el => {
-  [...el.closest('.card-right-buttons').querySelectorAll('button')].forEach(
-    btn => btn.classList.remove('blocked')
+  [...el.closest('.card-right-buttons').querySelectorAll('button')].forEach(btn =>
+    btn.classList.remove('blocked')
   );
 };
 
@@ -277,7 +273,6 @@ const actualButtonPlayActive = (index = 0) => {
 
   d.addEventListener('input', e => {
     if (e.target === $inputRange) {
-      actualButtonPlayActive(index);
       $audio.currentTime = e.target.value;
       $audio.play();
     }
@@ -300,9 +295,7 @@ const showTitle = elIndex => {
 const playAllSongs = (songs, selector) => {
   if (listNumbersSongs?.length > 0) {
     let arrayCards = listNumbersSongs.map(i => $$('.card')[i]);
-    let arrayColors = listNumbersSongs.map(
-      i => $$('.card')[i].dataset.colorCard
-    );
+    let arrayColors = listNumbersSongs.map(i => $$('.card')[i].dataset.colorCard);
     arrayCards.forEach((card, i) => (card.style.color = arrayColors[i]));
     listNumbersSongs = [];
   }
@@ -334,14 +327,13 @@ const playAllSongs = (songs, selector) => {
         $audio.src = arraySongs[currentIndex];
         $audio.loop = false;
         actualButtonPlayActive(currentIndex);
-        showTitle(currentIndex)
+        showTitle(currentIndex);
       }
 
       function previousTrack(currentIndex) {
         navigator.mediaSession.setActionHandler('previoustrack', () => {
           index--;
-          currentIndex =
-            (currentIndex - 1 + playlist.length) % playlist.length;
+          currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
           if (index === -1) index = currentIndex + 1;
           nextTrack(currentIndex);
           actualAudio(currentIndex);
@@ -374,9 +366,7 @@ const playAllSongs = (songs, selector) => {
 const playRandomSongs = (songs, selector) => {
   if (listNumbersSongs?.length > 0) {
     let arrayCards = listNumbersSongs.map(i => $$('.card')[i]);
-    let arrayColors = listNumbersSongs.map(
-      i => $$('.card')[i].dataset.colorCard
-    );
+    let arrayColors = listNumbersSongs.map(i => $$('.card')[i].dataset.colorCard);
     arrayCards.forEach((card, i) => (card.style.color = arrayColors[i]));
     listNumbersSongs = [];
   }
@@ -419,14 +409,13 @@ const playRandomSongs = (songs, selector) => {
         $audio.loop = false;
         updateMetadata(unArray[currentIndex]);
         actualButtonPlayActive(unArray[currentIndex]);
-        showTitle(unArray[currentIndex])
+        showTitle(unArray[currentIndex]);
       }
 
       function previousTrackOfRandomSongs(currentIndex) {
         navigator.mediaSession.setActionHandler('previoustrack', () => {
           index--;
-          currentIndex =
-            (currentIndex - 1 + playlist.length) % playlist.length;
+          currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
           if (index === -1) index = currentIndex + 1;
           nextTrackOfRandomSongs(currentIndex);
           actualAudio(currentIndex);
@@ -455,9 +444,7 @@ const playRandomSongs = (songs, selector) => {
 };
 
 const removeClassNavButtonActive = () => {
-  [...$$('.nav-btn-active')].forEach(el =>
-    el.classList.remove('nav-btn-active')
-  );
+  [...$$('.nav-btn-active')].forEach(el => el.classList.remove('nav-btn-active'));
 };
 
 const playSelectedSongs = (songs, selector, listNumber) => {
@@ -531,9 +518,7 @@ generateStars(200, '.star-1', '2px', '20s');
 
 (function headerCustomProperties() {
   const { body } = document;
-  let numberRandom = Math.floor(
-    Math.random() * Object.keys(headerColors).length
-  );
+  let numberRandom = Math.floor(Math.random() * Object.keys(headerColors).length);
   const [color1, color2, color3, color4] = headerColors[numberRandom];
   body.style.setProperty('--color1', color1);
   body.style.setProperty('--color2', color2);
@@ -574,9 +559,10 @@ d.addEventListener('click', e => {
       arrayCards.forEach((card, i) => (card.style.color = arrayColors[i]));
       listNumbersSongs = [];
     }
+    const arrayPlayButtons = [...$$(cardPlayButtonClass)];
 
     blockPlayPauseStopBUTTON();
-    const index = [...$$(cardPlayButtonClass)].indexOf(e.target);
+    let index = arrayPlayButtons.indexOf(e.target);
     _removeClassBlockedButtonNextSiblings(index);
 
     let audioActual = d.createElement('audio');
@@ -605,6 +591,13 @@ d.addEventListener('click', e => {
       );
       return;
     }
+
+    $audio.onended = () => {
+      index = index = (index + 1) % playlist.length;
+      const btnPlayNew = arrayPlayButtons[index];
+      if (index === 0) return;
+      btnPlayNew.click();
+    };
 
     return;
   }
@@ -664,9 +657,9 @@ d.addEventListener('click', e => {
     e.target.parentElement.close();
     setTimeout(() => {
       $('.am-modal')
-      .querySelector('.container-add-playlist')
-      .classList.remove('mode-active');
-    }, 500)
+        .querySelector('.container-add-playlist')
+        .classList.remove('mode-active');
+    }, 500);
     d.getElementById('agregarPlaylistInput').value = '';
     return;
   }
@@ -704,9 +697,7 @@ d.addEventListener('click', e => {
       return;
     }
 
-    let objectListNameCards = JSON.parse(
-      localStorage.getItem('listname-cards')
-    );
+    let objectListNameCards = JSON.parse(localStorage.getItem('listname-cards'));
     let newObjectListNameCards = JSON.stringify({
       ...objectListNameCards,
       [`${inputValor}`]: ''
@@ -781,9 +772,7 @@ d.addEventListener('change', e => {
     let currentNameSong = localStorage.getItem('lastCurrentNameSong');
     let url = localStorage.getItem('lastCurrentURLSong');
     let currentId = e.target.id;
-    let objectListNameCards = JSON.parse(
-      localStorage.getItem('listname-cards')
-    );
+    let objectListNameCards = JSON.parse(localStorage.getItem('listname-cards'));
     if (!objectListNameCards) return;
     let clase = e.target.getAttribute('data-clase');
     let $output = $(`.${clase}`);
@@ -815,10 +804,7 @@ d.addEventListener('change', e => {
       }
     }
 
-    let newArrray = objectListNameCards[`${currentId}`].toSpliced(
-      indiceReal,
-      1
-    );
+    let newArrray = objectListNameCards[`${currentId}`].toSpliced(indiceReal, 1);
 
     let newObject = {
       ...objectListNameCards,
@@ -884,9 +870,7 @@ d.addEventListener('keydown', e => {
       return;
     }
 
-    let objectListNameCards = JSON.parse(
-      localStorage.getItem('listname-cards')
-    );
+    let objectListNameCards = JSON.parse(localStorage.getItem('listname-cards'));
     let newObjectListNameCards = JSON.stringify({
       ...objectListNameCards,
       [`${inputValor}`]: ''
@@ -904,9 +888,7 @@ d.addEventListener('keydown', e => {
 function existThisSongInSomePlaylist(currentName) {
   let nameCurrent = currentName ?? '';
   if (localStorage.getItem('listname-cards')) {
-    let objetoNamePlaylists = JSON.parse(
-      localStorage.getItem('listname-cards')
-    );
+    let objetoNamePlaylists = JSON.parse(localStorage.getItem('listname-cards'));
     let playlistsWhereExistsCurrenName = [];
     let namesPlaylists = [];
 
